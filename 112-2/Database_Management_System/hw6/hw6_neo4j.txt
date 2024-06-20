@@ -1,0 +1,66 @@
+Task1:
+```
+LOAD CSV WITH HEADERS FROM 'file:///studentE.csv' AS row
+CREATE (:Student {
+    id: row._id,
+    position: row.position,
+    dept: row.dept,
+    year: toInteger(row.year),
+    name: row.name,
+    email: row.email,
+    class: row.class
+});
+```
+
+Task2:
+```
+LOAD CSV WITH HEADERS FROM 'file:///student_groupE.csv' AS row
+MERGE (g:Group {name: row.group})
+WITH row, g
+MATCH (s:Student {id: row._id})
+MERGE (s)-[:BELONGS_TO]->(g);
+```
+
+Task3:
+```
+MATCH (self:Student {name: '王偉力 (WANG, WEI-LI)'})-[:BELONGS_TO]->(g:Group)<-[:BELONGS_TO]-(partner:Student)
+WHERE self <> partner
+RETURN self.name AS Self, collect(partner.name) AS Partners;
+```
+
+Task4:
+```
+MATCH (s:Student)
+WHERE s.dept IS NOT NULL
+MERGE (d:Department {name: s.dept})
+MERGE (s)-[:STUDIED_AT]->(d);
+```
+
+Task5:
+```
+MATCH (s:Student)
+WHERE s.position = '學生'
+MATCH (s)-[:STUDIED_AT]->(d:Department)
+RETURN d.name AS Department, COUNT(s) AS StudentCount
+ORDER BY StudentCount DESC
+LIMIT 10;
+```
+
+Task6:
+```
+MATCH (s:Student)-[:BELONGS_TO]->(g:Group)
+WHERE s.dept IS NOT NULL
+WITH g.name AS GroupNumber, collect(DISTINCT s.dept) AS Departments
+RETURN GroupNumber, Departments
+ORDER BY size(Departments) DESC, GroupNumber ASC
+LIMIT 5;
+```
+
+Task7:
+```
+MATCH (self:Student {name: '王偉力 (WANG, WEI-LI)'})-[:BELONGS_TO]->(g:Group)<-[:BELONGS_TO]-(partner:Student)
+MATCH (partner)-[:STUDIED_AT]->(d:Department)
+WITH partner, d
+MATCH (s:Student)-[:STUDIED_AT]->(d)
+RETURN partner.name AS partner_name, d.name AS dept_name, COUNT(s) AS dept_size;
+```

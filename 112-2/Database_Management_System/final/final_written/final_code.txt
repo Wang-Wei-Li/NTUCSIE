@@ -1,0 +1,2 @@
+github連結如下，詳細的說明都寫在readme裡面了: 
+https://github.com/5000user5000/vmcache

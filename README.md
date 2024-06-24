@@ -10,6 +10,6 @@ NTUCSIE/<br>
 │   ├── ❌ Mobile_and_Pervasive_Intelligence/<br>
 ├── 112-2/<br>
 │   ├── ❌ Introduction_to_GenAI/<br>
-│   ├── ❌ Web_Application_Programming/<br>
-│   ├── ⚠️ Database_Management_System/<br>
+│   ├── ⚠️ Web_Application_Programming/<br>
+│   ├── ✅ Database_Management_System/<br>
 │   ├── ✅ Principles_of_Financial_Computing/<br>
